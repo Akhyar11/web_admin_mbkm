@@ -1,9 +1,7 @@
-export default function Edit() {
+export default function Tambah() {
   return (
     <div>
-      <span className="text-lg font-semibold tracking-wide">
-        Detail Penduduk
-      </span>
+      <span className="text-lg font-semibold tracking-wide">Tambah Penduduk</span>
       <div className="w-full flex flex-col gap-5 bg-primery rounded-lg mt-5">
         <div className="flex flex-col gap-5">
           <span className="block text-lg font-semibold bg-indigo-800 p-4 border-b rounded-t-lg">
@@ -71,21 +69,10 @@ export default function Edit() {
               />
             </div>
             <div className="flex justify-between">
-              <div className="flex flex-col md:flex-row gap-2 md:gap-5">
+              <div className="flex gap-5">
                 <button className="bg-green-500 px-4 py-2 h-max w-max rounded-md text-lg font-semibold hover:bg-green-800 transition-all duration-300">
-                  Simpan
+                  Tambah
                 </button>
-                <button className="bg-red-500 px-4 py-2 h-max w-max rounded-md text-lg font-semibold hover:bg-green-800 transition-all duration-300">
-                  Hapus
-                </button>
-              </div>
-
-              <div className="px-4 py-2 bg-orange-500 rounded-lg max-w-96">
-                <p>
-                  Jangan tekan <span className="font-bold">simpan</span> jika
-                  tidak melakukan perubahan, data yang dihapus tidak dapat
-                  dikembalikan lagi hati-hati dalam memilih!!!
-                </p>
               </div>
             </div>
           </div>
