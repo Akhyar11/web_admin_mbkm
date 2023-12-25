@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Penduduk(){
   return (
     <div className="w-full flex flex-col gap-5">
@@ -23,9 +25,9 @@ export default function Penduduk(){
             <p className="block w-1/4">Muhammad Akhyar</p>
             <p className="block w-1/4">Laki Laki</p>
             <div className="w-1/4 overflow-auto">
-              <button className="px-4 py-2 rounded-md bg-blue-500 text-lg font-semibold hover:bg-blue-800 transition-all duration-300 cursor-pointer">
+              <Link href="/penduduk/edit/1" className="px-4 py-2 block w-max text-center rounded-md bg-blue-500 text-lg font-semibold hover:bg-blue-800 transition-all duration-300 cursor-pointer">
                 Edit
-              </button>
+              </Link>
             </div>
           </div>
         </div>
