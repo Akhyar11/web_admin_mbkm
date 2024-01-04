@@ -1,0 +1,68 @@
+"use client"
+
+import axios from "axios";
+import { useState } from "react";
+import assets from "../../assets.json"
+import { useRouter } from "next/navigation";
+import Cookies from "js-cookie"
+
+export default function Login(){
+  const [username, useUserName] = useState(undefined)
+  const [pass, usePassword] = useState(undefined)
+  const [msg, setMsg] = useState(undefined)
+  const router = useRouter()
+
+  const handelBtn = async (e) => {
+    e.preventDefault()
+    try {
+      const data = await axios.post(assets.API + "/user/login", {username, pass})
+      Cookies.set("token", data.data.refreshToken);
+      router.push("/dashboard")
+    } catch (err) {
+      setMsg(err.response.data.msg)
+    }
+  }
+
+  return (
+    <div className="w-full h-screen md:flex flex-col justify-center md:items-center md:absolute top-0">
+      <form action="POST" className="md:w-2/4 p-5 rounded-lg bg-primery">
+        <span className="block px-2 text-2xl font-semibold">Login</span>
+        <div className="p-4 flex flex-col gap-5">
+          <div>
+            <span className="block px-2 text-lg font-semibold">Username</span>
+            <input
+              type="text"
+              onChange={(e) => useUserName(e.target.value)}
+              className="bg-indigo-800 p-4 w-full rounded-md placeholder:text-lg"
+              placeholder="Masukan nama username"
+            />
+          </div>
+          <div>
+            <span className="block px-2 text-lg font-semibold">Password</span>
+            <input
+              type="password"
+              onChange={(e) => usePassword(e.target.value)}
+              className="bg-indigo-800 p-4 w-full rounded-md placeholder:text-lg"
+              placeholder="Masukan nama password"
+            />
+          </div>
+          <div className="flex justify-between">
+            <div className="flex gap-5">
+              <button
+                onClick={handelBtn}
+                className="bg-green-500 px-4 py-2 h-max w-max rounded-md text-lg font-semibold hover:bg-green-800 transition-all duration-300"
+              >
+                Sing In
+              </button>
+            </div>
+            {msg === undefined ? (
+              null
+            ) : (
+              <p className="block px-4 py-2 bg-red-500 rounded-lg">{msg}</p>
+            )}
+          </div>
+        </div>
+      </form>
+    </div>
+  );
+}

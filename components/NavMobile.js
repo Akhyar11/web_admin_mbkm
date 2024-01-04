@@ -7,7 +7,7 @@ import Link from "next/link";
 export default function NavMobile() {
   return (
     <div
-      className="text-lg w-full hidden transition-all duration-300 -z-10 -ml-[1000px]"
+      className="text-lg w-full hidden relative z-10 transition-all duration-300 -ml-[1000px]"
       id="navMobile"
     >
       <Link

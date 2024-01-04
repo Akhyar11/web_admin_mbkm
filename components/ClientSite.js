@@ -18,7 +18,7 @@ export default function ClientSite({children}) {
 
   return (
     <>
-      <div className="fixed w-full text-active">
+      <div className="fixed w-full text-active z-10">
         <div className="flex bg-primery text-4xl p-6 justify-between border-b border-secondry">
           <MdMenu onClick={navActive} className="cursor-pointer" />
           <div className="flex gap-6">
