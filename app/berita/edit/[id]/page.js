@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import personIcon from "@/public/person.svg";
-import assets from "@/assets.json"
+import assets from "@/assets.json";
 import axios from "axios";
 import Image from "next/image";
 
@@ -43,15 +43,15 @@ export default function Edit() {
       await axios.put(
         assets.API + "/post/" + params.id,
         { title, description, link, author },
-        { headers: { Authorization: "Bearer " + token } }
+        { headers: { Authorization: "Bearer " + token } },
       );
       picture !== undefined
         ? await axios.put(
-            assets.API + `/post/img/edit/${params.id}`,
-            formData,
+          assets.API + `/post/img/edit/${params.id}`,
+          formData,
 
-            { headers: { Authorization: "Bearer " + token } }
-          )
+          { headers: { Authorization: "Bearer " + token } },
+        )
         : null;
       router.push("/berita");
     } catch (err) {
@@ -60,8 +60,9 @@ export default function Edit() {
   };
 
   useEffect(() => {
-    getData()
-  }, [])
+    getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <div>
       <span className="text-lg font-semibold tracking-wide">Berita Desa</span>

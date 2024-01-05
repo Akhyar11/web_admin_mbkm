@@ -13,7 +13,7 @@ export default function Edit() {
   const [description, setDesc] = useState(undefined);
   const [picture, setPicture] = useState(undefined);
   const [urlPicture, setUrlPicture] = useState(undefined);
-  const [msg, setMsg] = useState(undefined)
+  const [msg, setMsg] = useState(undefined);
   const url = picture === undefined ? undefined : URL.createObjectURL(picture);
   const params = useParams();
   const router = useRouter();
@@ -36,23 +36,24 @@ export default function Edit() {
       await axios.put(
         assets.API + "/kegiatan/" + params.id,
         { title, description },
-        { headers: { Authorization: "Bearer " + token } }
+        { headers: { Authorization: "Bearer " + token } },
       );
       picture !== undefined
         ? await axios.put(
-            assets.API + `/kegiatan/img/edit/${title}`,
-            formData,
+          assets.API + `/kegiatan/img/edit/${title}`,
+          formData,
 
-            { headers: { Authorization: "Bearer " + token } }
-          )
+          { headers: { Authorization: "Bearer " + token } },
+        )
         : null;
       router.push("/kegiatan");
     } catch (err) {
-      setMsg(err.response.data.msg)
+      setMsg(err.response.data.msg);
     }
   };
   useEffect(() => {
     getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div>

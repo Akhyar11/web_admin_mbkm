@@ -19,7 +19,7 @@ export default function Edit() {
   const [msg, setMsg] = useState(undefined);
   const url = foto === undefined ? undefined : URL.createObjectURL(foto);
   const params = useParams();
-  const router = useRouter()
+  const router = useRouter();
   const getData = async () => {
     try {
       const response = await axios.get(assets.API + "/penduduk/" + params.id);
@@ -30,7 +30,7 @@ export default function Edit() {
       setIbu(data.nama_ibu);
       setJk(data.jk);
       setUrlFoto(assets.PUBLIC + response.data.penduduk[0].foto);
-    } catch (err) {}
+    } catch (err) { }
   };
   const handelBtn = async () => {
     try {
@@ -40,15 +40,16 @@ export default function Edit() {
       await axios.put(
         assets.API + "/penduduk/" + params.id,
         { name, no_kk, no_induk, nama_ibu, jk },
-        { headers: { Authorization: "Bearer " + token } }
+        { headers: { Authorization: "Bearer " + token } },
       );
-      foto !== undefined ? 
-      await axios.put(
-        assets.API + `/penduduk/img/edit/${no_kk}/${no_induk}`,
-        formData,
+      foto !== undefined
+        ? await axios.put(
+          assets.API + `/penduduk/img/edit/${no_kk}/${no_induk}`,
+          formData,
 
-        { headers: { Authorization: "Bearer " + token } }
-      ) : null
+          { headers: { Authorization: "Bearer " + token } },
+        )
+        : null;
       router.push("/penduduk");
     } catch (err) {
       setMsg(err.response.data.msg);
@@ -57,6 +58,7 @@ export default function Edit() {
 
   useEffect(() => {
     getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div>

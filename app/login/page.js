@@ -1,27 +1,30 @@
-"use client"
+"use client";
 
 import axios from "axios";
 import { useState } from "react";
-import assets from "../../assets.json"
+import assets from "../../assets.json";
 import { useRouter } from "next/navigation";
-import Cookies from "js-cookie"
+import Cookies from "js-cookie";
 
-export default function Login(){
-  const [username, useUserName] = useState(undefined)
-  const [pass, usePassword] = useState(undefined)
-  const [msg, setMsg] = useState(undefined)
-  const router = useRouter()
+export default function Login() {
+  const [username, setUserName] = useState(undefined);
+  const [pass, setPassword] = useState(undefined);
+  const [msg, setMsg] = useState(undefined);
+  const router = useRouter();
 
   const handelBtn = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
-      const data = await axios.post(assets.API + "/user/login", {username, pass})
+      const data = await axios.post(assets.API + "/user/login", {
+        username,
+        pass,
+      });
       Cookies.set("token", data.data.refreshToken);
-      router.push("/dashboard")
+      router.push("/dashboard");
     } catch (err) {
-      setMsg(err.response.data.msg)
+      setMsg(err.response.data.msg);
     }
-  }
+  };
 
   return (
     <div className="w-full h-screen md:flex flex-col justify-center md:items-center md:absolute top-0">
@@ -32,7 +35,7 @@ export default function Login(){
             <span className="block px-2 text-lg font-semibold">Username</span>
             <input
               type="text"
-              onChange={(e) => useUserName(e.target.value)}
+              onChange={(e) => setUserName(e.target.value)}
               className="bg-indigo-800 p-4 w-full rounded-md placeholder:text-lg"
               placeholder="Masukan nama username"
             />
@@ -41,7 +44,7 @@ export default function Login(){
             <span className="block px-2 text-lg font-semibold">Password</span>
             <input
               type="password"
-              onChange={(e) => usePassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
               className="bg-indigo-800 p-4 w-full rounded-md placeholder:text-lg"
               placeholder="Masukan nama password"
             />
@@ -55,9 +58,7 @@ export default function Login(){
                 Sing In
               </button>
             </div>
-            {msg === undefined ? (
-              null
-            ) : (
+            {msg === undefined ? null : (
               <p className="block px-4 py-2 bg-red-500 rounded-lg">{msg}</p>
             )}
           </div>

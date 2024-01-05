@@ -1,25 +1,25 @@
-"use client"
+"use client";
 
 import axios from "axios";
-import assets from "@/assets.json"
+import assets from "@/assets.json";
 import { useEffect, useState } from "react";
 
 export default function Dashboard() {
   const [berita, setBerita] = useState([]);
   const [penduduk, setPenduduk] = useState([]);
 
-  let indexBerita = 0
+  let indexBerita = 0;
 
   const getData = async () => {
     const dataPenduduk = await axios.get(assets.API + "/penduduk");
-    const dataBerita = await axios.get(assets.API + "/post")
+    const dataBerita = await axios.get(assets.API + "/post");
     setBerita(dataBerita.data.post);
-    setPenduduk(dataPenduduk.data.penduduk)
-  }
+    setPenduduk(dataPenduduk.data.penduduk);
+  };
 
   useEffect(() => {
-    getData()
-  }, [])
+    getData();
+  }, []);
   return (
     <div className="w-full flex flex-col gap-5">
       <span className="text-lg font-semibold tracking-wide">Dashboard</span>
@@ -34,7 +34,6 @@ export default function Dashboard() {
         </div>
       </div>
       <div className="flex flex-col lg:flex-row gap-5">
-
         <div className="w-full flex flex-col gap-4 bg-primery rounded-lg p-6">
           <div className="flex justify-between">
             <span className="block text-lg font-semibold">Berita Terkini</span>
@@ -48,15 +47,13 @@ export default function Dashboard() {
               <p className="block w-1/4">Author</p>
               <p className="block w-1/4">Link</p>
             </div>
-            {berita.map(i => {
+            {berita.map((i) => {
               return (
                 <div className="flex justify-between w-full py-2" key={i.id}>
                   <p className="block w-6">{++indexBerita}</p>
                   <p className="block w-1/4">{i.title}</p>
                   <p className="block w-1/4">{i.author}</p>
-                  <p className="block w-1/4 overflow-auto">
-                    {i.link}
-                  </p>
+                  <p className="block w-1/4 overflow-auto">{i.link}</p>
                 </div>
               );
             })}
@@ -69,7 +66,7 @@ export default function Dashboard() {
           </div>
 
           <div className="flex gap-4 p-4 rounded-md bg-indigo-800">
-            <img className="p-6 bg-white rounded-md"/>
+            <div className="p-6 bg-white rounded-md"></div>
             <div className="flex flex-col items-center">
               <span className="text-lg font-semibold">Muhammad Akhyar</span>
               <span className="text-disable w-full">Admin</span>
