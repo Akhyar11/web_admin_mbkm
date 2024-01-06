@@ -7,14 +7,17 @@ import { useEffect, useState } from "react";
 export default function Dashboard() {
   const [berita, setBerita] = useState([]);
   const [penduduk, setPenduduk] = useState([]);
+  const [pengurus, setPengurus] = useState([]);
 
   let indexBerita = 0;
 
   const getData = async () => {
     const dataPenduduk = await axios.get(assets.API + "/penduduk");
+    const dataPengurus = await axios.get(assets.API + "/pengurus");
     const dataBerita = await axios.get(assets.API + "/post");
     setBerita(dataBerita.data.post);
     setPenduduk(dataPenduduk.data.penduduk);
+    setPengurus(dataPengurus.data.pengurus);
   };
 
   useEffect(() => {
@@ -29,8 +32,8 @@ export default function Dashboard() {
           <span className="text-2xl font-semibold">Penduduk</span>
         </div>
         <div className="w-full flex flex-col text-center bg-orange-500 rounded-lg p-6">
-          <span className="block text-6xl">55</span>
-          <span className="text-2xl font-semibold">Anggota</span>
+          <span className="block text-6xl">{pengurus.length}</span>
+          <span className="text-2xl font-semibold">Pengurus</span>
         </div>
       </div>
       <div className="flex flex-col lg:flex-row gap-5">

@@ -7,7 +7,7 @@ import Link from "next/link";
 export default function NavMobile() {
   return (
     <div
-      className="text-lg w-full hidden relative z-10 transition-all duration-300 -ml-[1000px]"
+      className="text-lg w-full z-10 transition-all absolute -left-full"
       id="navMobile"
     >
       <Link
@@ -30,6 +30,13 @@ export default function NavMobile() {
       >
         <GoPeople />
         <span>Penduduk</span>
+      </Link>
+      <Link
+        href="/pengurus"
+        className="flex cursor-pointer text-disable items-center px-6 py-4 border-b border-secondry gap-2 bg-primery"
+      >
+        <GoPeople />
+        <span>Pengurus</span>
       </Link>
       <Link
         href="/kegiatan"

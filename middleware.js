@@ -3,8 +3,8 @@ import { NextResponse } from "next/server";
 
 export async function middleware(req, res) {
   try {
-    const cookie = req.cookies.get("token")
-    const body = {token: cookie.value}
+    const cookie = req.cookies.get("token");
+    const body = { token: cookie.value };
     const response = await fetch(assets.API + "/user/token", {
       method: "POST",
       headers: {
@@ -13,9 +13,10 @@ export async function middleware(req, res) {
       body: JSON.stringify(body),
     });
 
-    const data = await response.json()
+    const data = await response.json();
 
-    if(data.msg === "Harap login dulu") return NextResponse.redirect(new URL("/login", req.url));
+    if (data.msg === "Harap login dulu")
+      return NextResponse.redirect(new URL("/login", req.url));
     return NextResponse.next();
   } catch (err) {
     console.log(err);
@@ -29,6 +30,7 @@ export const config = {
     "/dashboard",
     "/kegiatan/:path*",
     "/penduduk/:path*",
+    "/pengurus/:path*",
     "/detail",
   ],
 };

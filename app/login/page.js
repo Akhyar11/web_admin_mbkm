@@ -55,7 +55,7 @@ export default function Login() {
                 onClick={handelBtn}
                 className="bg-green-500 px-4 py-2 h-max w-max rounded-md text-lg font-semibold hover:bg-green-800 transition-all duration-300"
               >
-                Sing In
+                Sign In
               </button>
             </div>
             {msg === undefined ? null : (
