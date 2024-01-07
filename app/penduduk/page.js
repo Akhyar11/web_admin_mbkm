@@ -5,7 +5,7 @@ import axios from "axios";
 import assets from "../../assets.json";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import getToken from "../../utils/getToken";
+import getToken from "@/utils/getToken";
 
 export default function Penduduk() {
   const [data, setData] = useState([]);
@@ -24,8 +24,9 @@ export default function Penduduk() {
       await axios.delete(assets.API + "/penduduk/" + id, {
         headers: { Authorization: "Bearer " + token },
       });
+      window.location.reload();
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   };
 
@@ -88,8 +89,7 @@ export default function Penduduk() {
                   </Link>
                   <button
                     onClick={() => {
-                      handleHapus(i.id)
-                      window.location.reload()
+                      handleHapus(i.id);
                     }}
                     className="bg-red-500 px-4 py-2 h-max w-max rounded-md text-lg font-semibold hover:bg-red-800 transition-all duration-300"
                   >

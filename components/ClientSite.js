@@ -23,8 +23,6 @@ export default function ClientSite({ children }) {
     list.toggle("right-0");
   };
 
-  const getData = async () => {};
-
   return (
     <>
       <div className="fixed w-full text-active z-10">

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import Link from "next/link";
 import axios from "axios";
@@ -15,6 +15,7 @@ export default function Berita() {
       await axios.delete(assets.API + "/post/" + id, {
         headers: { Authorization: "Bearer " + token },
       });
+      window.location.reload();
     } catch (err) {
       console.log(err);
     }
@@ -78,7 +79,6 @@ export default function Berita() {
               <button
                 onClick={() => {
                   handleHapus(i.id);
-                  window.location.reload();
                 }}
                 className="bg-red-500 absolute top-2 left-2 opacity-0 group-hover:opacity-100 px-4 py-2 h-max w-max rounded-md text-lg font-semibold hover:bg-red-800 transition-all duration-300"
               >

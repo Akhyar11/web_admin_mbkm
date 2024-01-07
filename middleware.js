@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 export async function middleware(req, res) {
   try {
     const cookie = req.cookies.get("token");
-    const body = { token: cookie.value };
+    const body = { token: cookie.value || "tidak ada token" };
     const response = await fetch(assets.API + "/user/token", {
       method: "POST",
       headers: {
@@ -17,6 +17,8 @@ export async function middleware(req, res) {
 
     if (data.msg === "Harap login dulu")
       return NextResponse.redirect(new URL("/login", req.url));
+
+    console.log("lolos");
     return NextResponse.next();
   } catch (err) {
     console.log(err);

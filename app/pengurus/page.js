@@ -24,6 +24,7 @@ export default function Pengurus() {
       await axios.delete(assets.API + "/pengurus/" + id, {
         headers: { Authorization: "Bearer " + token },
       });
+      window.location.reload();
     } catch (err) {
       console.log(err);
     }
@@ -89,7 +90,6 @@ export default function Pengurus() {
                   <button
                     onClick={() => {
                       handleHapus(i.id);
-                      window.location.reload();
                     }}
                     className="bg-red-500 px-4 py-2 h-max w-max rounded-md text-lg font-semibold hover:bg-red-800 transition-all duration-300"
                   >

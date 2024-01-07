@@ -15,8 +15,9 @@ export default function Kegiatan() {
       await axios.delete(assets.API + "/kegiatan/" + id, {
         headers: { Authorization: "Bearer " + token },
       });
+      window.location.reload();
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   };
   const getData = async () => {
@@ -50,7 +51,10 @@ export default function Kegiatan() {
 
       {data.map((i) => {
         return (
-          <div key={i.id} className="w-full group block hover:ring hover:ring-primery transition-all duration-300 bg-primery rounded-lg mt-5">
+          <div
+            key={i.id}
+            className="w-full group block hover:ring hover:ring-primery transition-all duration-300 bg-primery rounded-lg mt-5"
+          >
             <div className="flex flex-col relative">
               <div>
                 <Image
@@ -77,7 +81,6 @@ export default function Kegiatan() {
               <button
                 onClick={() => {
                   handleHapus(i.id);
-                  window.location.reload();
                 }}
                 className="bg-red-500 absolute top-2 left-2 opacity-0 group-hover:opacity-100 px-4 py-2 h-max w-max rounded-md text-lg font-semibold hover:bg-red-800 transition-all duration-300"
               >
