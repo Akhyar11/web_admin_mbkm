@@ -5,7 +5,7 @@ export async function middleware(req, res) {
   try {
     const cookie = req.cookies.get("token");
     const body = { token: cookie.value || "tidak ada token" };
-    const response = await fetch(assets.API + "/user/token", {
+    const responseToken = await fetch(assets.API + "/user/token", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -13,15 +13,13 @@ export async function middleware(req, res) {
       body: JSON.stringify(body),
     });
 
-    const data = await response.json();
+    const dataToken = await responseToken.json();
 
-    if (data.msg === "Harap login dulu")
+    if (dataToken.msg === "Harap login dulu")
       return NextResponse.redirect(new URL("/login", req.url));
-
-    console.log("lolos");
     return NextResponse.next();
   } catch (err) {
-    console.log(err);
+    console.log({ err });
     return NextResponse.redirect(new URL("/login", req.url));
   }
 }

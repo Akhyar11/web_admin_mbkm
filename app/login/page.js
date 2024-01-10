@@ -1,7 +1,7 @@
 "use client";
 
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import assets from "../../assets.json";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
@@ -19,17 +19,25 @@ export default function Login() {
         username,
         pass,
       });
-      Cookies.set("token", data.data.refreshToken);
-      router.push("/dashboard");
+      const user = data.data.user[0];
+      const now = new Date().getTime() + 1000 * 60 * 5;
+      Cookies.set("token", data.data.refreshToken, { expires: new Date(now) });
+      Cookies.set("id", user.id, { expires: new Date(now) });
+      window.location.reload();
     } catch (err) {
       setMsg(err.response.data.msg);
     }
   };
 
+  useEffect(() => {
+    const token = Cookies.get("token");
+    if (token !== "") router.push("/dashboard");
+  });
+
   return (
     <div className="w-full h-screen md:flex flex-col justify-center md:items-center md:absolute top-0">
       <form action="POST" className="md:w-2/4 p-5 rounded-lg bg-primery">
-        <span className="block px-2 text-2xl font-semibold">Login</span>
+        <span className="block px-2 text-2xl font-semibold">Sign In</span>
         <div className="p-4 flex flex-col gap-5">
           <div>
             <span className="block px-2 text-lg font-semibold">Username</span>

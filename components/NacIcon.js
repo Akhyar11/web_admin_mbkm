@@ -4,7 +4,7 @@ import React from "react";
 const NacIcon = () => {
   return (
     <div
-      className="flex flex-col text-lg bg-primery w-max rounded-lg -right-48 absolute transition-all"
+      className="flex flex-col text-lg bg-primery w-max rounded-b-lg -right-48 absolute transition-all"
       id="navIcon"
     >
       <Link
@@ -13,7 +13,10 @@ const NacIcon = () => {
       >
         Pengaturan
       </Link>
-      <Link href={"#"} className="px-6 py-4 hover:bg-indigo-800 transition-all">
+      <Link
+        href={"/pengaturan/pengguna"}
+        className="px-6 py-4 hover:bg-indigo-800 transition-all rounded-b-lg"
+      >
         Atur Pengguna
       </Link>
     </div>

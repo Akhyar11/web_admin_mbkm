@@ -12,10 +12,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <title>Aplikasi Admin Desa Karang Asem</title>
       <body className={inter.className}>
-        <ClientSite>
-          {children}
-        </ClientSite>
+        <ClientSite>{children}</ClientSite>
       </body>
     </html>
   );
