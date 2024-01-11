@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import assets from "../../assets.json";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
+import getToken from "@/utils/getToken";
 
 export default function Login() {
   const [username, setUserName] = useState(undefined);
@@ -30,9 +31,11 @@ export default function Login() {
   };
 
   useEffect(() => {
-    const token = Cookies.get("token");
-    if (token !== "") router.push("/dashboard");
-  });
+    try {
+      getToken();
+      router.push("/dashboard");
+    } catch (err) { }
+  }, []);
 
   return (
     <div className="w-full h-screen md:flex flex-col justify-center md:items-center md:absolute top-0">
