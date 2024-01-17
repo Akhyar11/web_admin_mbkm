@@ -47,7 +47,11 @@ export default function ClientSite({ children }) {
   };
 
   useEffect(() => {
-    getUser();
+    try {
+      getUser();
+    } catch (err) {
+      console.log({ err });
+    }
   }, []);
 
   return (

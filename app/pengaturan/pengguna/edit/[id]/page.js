@@ -1,34 +1,73 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import assets from "@/assets.json";
 import getToken from "@/utils/getToken";
 import personIcon from "@/public/person.svg";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 
-export default function Tambah() {
-  const [username, setUserName] = useState("");
-  const [pass, setPass] = useState("");
-  const [email, setEmail] = useState("");
+export default function Edit() {
+  const [username, setUserName] = useState(undefined);
+  const [passOld, setPassOld] = useState(undefined);
+  const [passNew, setPassNew] = useState(undefined);
+  const [email, setEmail] = useState(undefined);
   const [msg, setMsg] = useState(undefined);
-  const [foto, setFoto] = useState(undefined);
-  const url = foto === undefined ? undefined : URL.createObjectURL(foto);
+  const [foto, setFoto] = useState("");
+  const url = foto === "" ? "" : URL.createObjectURL(foto);
+  const params = useParams();
   const router = useRouter();
   const handelBtn = async () => {
     try {
       const token = await getToken();
-      await axios.post(
-        assets.API + "/user/register",
-        { username, pass, email },
+      const formData = new FormData();
+      formData.append("user", foto);
+      if (passOld !== undefined && passNew !== undefined) {
+        await axios.put(
+          assets.API + "/user/pass/" + params.id,
+          {
+            passOld,
+            passNew,
+          },
+          { headers: { Authorization: "Bearer " + token } }
+        );
+      }
+
+      await axios.patch(
+        assets.API + "/user/" + params.id,
+        { username, email },
         { headers: { Authorization: "Bearer " + token } }
       );
+
+      foto !== ""
+        ? await axios.post(
+            assets.API + `/user/img/${params.id}`,
+            formData,
+
+            { headers: { Authorization: "Bearer " + token } }
+          )
+        : null;
       router.push("/pengaturan/pengguna");
     } catch (err) {
       setMsg(err.response.data.msg);
     }
   };
+
+  const getUser = async () => {
+    try {
+      const result = await axios.get(assets.API + "/user/" + params.id);
+      const user = result.data.user;
+      setUserName(user[0].username);
+      setEmail(user[0].email);
+    } catch (err) {
+      setMsg(err.response.data.msg);
+    }
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
   return (
     <div>
       <span className="text-lg font-semibold tracking-wide">
@@ -41,7 +80,7 @@ export default function Tambah() {
           </span>
           <div className="px-6 flex w-full justify-center">
             <div className="bg-secondry rounded-md p-4">
-              {foto === undefined ? (
+              {foto === "" ? (
                 <Image
                   src={personIcon}
                   priority
@@ -69,11 +108,12 @@ export default function Tambah() {
             <div className="p-4 flex flex-col gap-5">
               <div>
                 <span className="block px-2 text-lg font-semibold">
-                  User Name
+                  Username
                 </span>
                 <input
                   type="text"
                   onChange={(e) => setUserName(e.target.value)}
+                  value={username !== undefined ? username : ""}
                   required
                   className="bg-indigo-800 p-4 w-full rounded-md placeholder:text-lg"
                   placeholder="Masukan user name Pengguna"
@@ -81,14 +121,24 @@ export default function Tambah() {
               </div>
               <div>
                 <span className="block px-2 text-lg font-semibold">
-                  Password
+                  Password Lama
                 </span>
                 <input
                   type="text"
-                  onChange={(e) => setPass(e.target.value)}
-                  required
+                  onChange={(e) => setPassOld(e.target.value)}
                   className="bg-indigo-800 p-4 w-full rounded-md placeholder:text-lg"
-                  placeholder="Masukan password Pengguna"
+                  placeholder="Masukan password lama Pengguna"
+                />
+              </div>
+              <div>
+                <span className="block px-2 text-lg font-semibold">
+                  Password Baru
+                </span>
+                <input
+                  type="text"
+                  onChange={(e) => setPassNew(e.target.value)}
+                  className="bg-indigo-800 p-4 w-full rounded-md placeholder:text-lg"
+                  placeholder="Masukan password baru Pengguna"
                 />
               </div>
               <div>
@@ -96,6 +146,7 @@ export default function Tambah() {
                 <input
                   type="text"
                   onChange={(e) => setEmail(e.target.value)}
+                  value={email !== undefined ? email : ""}
                   required
                   className="bg-indigo-800 p-4 w-full rounded-md placeholder:text-lg"
                   placeholder="Masukan email Pengguna"
@@ -109,7 +160,6 @@ export default function Tambah() {
                   type="file"
                   onChange={(e) => setFoto(e.target.files[0])}
                   className="bg-indigo-800 p-4 w-full rounded-md placeholder:text-lg"
-                  disabled
                   placeholder="Masukan kode pos"
                 />
               </div>
@@ -119,7 +169,7 @@ export default function Tambah() {
                     type="save"
                     className="bg-green-500 px-4 py-2 h-max w-max rounded-md text-lg font-semibold hover:bg-green-800 transition-all duration-300"
                   >
-                    Tambah
+                    Simpan
                   </button>
                 </div>
                 {msg === undefined ? (
